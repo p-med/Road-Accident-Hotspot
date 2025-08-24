@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Friday, August 22, 2025 8:19:25 PM</msg><msg code="0" type="0">DEBUG - Fatalities boolean: True</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 81, in &lt;module&gt;
+﻿    for row in cursor: # For each row on the cursor
+﻿RuntimeError: Cannot find field ''
+</msg><msg code="0" type="0">Failed script Crash Hotspot Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Friday, August 22, 2025 8:19:28 PM (Elapsed Time: 3.13 seconds)</msg></messages>

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Saturday, August 23, 2025 1:07:19 AM</msg><msg code="0" type="0">Crash Point data snapped to the road feature class.</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 112, in &lt;module&gt;
+﻿    for row in cursor: # For each row on the cursor
+﻿RuntimeError: Cannot find field ''
+</msg><msg code="0" type="0">Failed script Traffic Crash Hotspot Analysis Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Saturday, August 23, 2025 1:07:22 AM (Elapsed Time: 3.43 seconds)</msg></messages>

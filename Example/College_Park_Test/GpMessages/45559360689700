@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Friday, August 22, 2025 8:02:07 PM</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 25, in &lt;module&gt;
+﻿    arcpy.env.outputCoordinateSystem = arcpy.GetParameterAsText(9) # REQUIRED: Spatial Reference for calculations
+﻿                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+﻿  File "C:\Users\pmedi\AppData\Local\Programs\ArcGIS\Pro\Resources\ArcPy\arcpy\__init__.py", line 742, in GetParameterAsText
+﻿    return gp.getParameterAsText(index)
+﻿           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+﻿  File "C:\Users\pmedi\AppData\Local\Programs\ArcGIS\Pro\Resources\ArcPy\arcpy\geoprocessing\_base.py", line 261, in getParameterAsText
+﻿    self._gp.GetParameterAsText(*gp_fixargs(args, True)))
+﻿    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+﻿RuntimeError: Object: Error in getting parameter as text
+</msg><msg code="0" type="0">Failed script Crash Hotspot Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Friday, August 22, 2025 8:02:07 PM (Elapsed Time: 0.12 seconds)</msg></messages>

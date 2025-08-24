@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Friday, August 22, 2025 11:45:12 PM</msg><msg code="0" type="0">Crash Point data snapped to the road feature class.</msg><msg code="0" type="0">Crash and fatalities data points joined to the road data.</msg><msg code="0" type="0">Average crash indicents per road segement per year calculated</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 194, in &lt;module&gt;
+﻿    active_map.addDataFromPath("Crash_hotspots")
+﻿  File "C:\Users\pmedi\AppData\Local\Programs\ArcGIS\Pro\Resources\ArcPy\arcpy\utils.py", line 186, in fn_
+﻿    return fn(*args, **kw)
+﻿           ^^^^^^^^^^^^^^^
+﻿  File "C:\Users\pmedi\AppData\Local\Programs\ArcGIS\Pro\Resources\ArcPy\arcpy\_mp.py", line 4811, in addDataFromPath
+﻿    return convertArcObjectToPythonObject(self._arc_object.addDataFromPath(*gp_fixargs((data_path, web_service_type, custom_parameters,), True)))
+﻿                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+﻿RuntimeError: Failed to add data. Possible credentials issue.
+</msg><msg code="0" type="0">Failed script Crash Hotspot Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Friday, August 22, 2025 11:45:21 PM (Elapsed Time: 8.94 seconds)</msg></messages>

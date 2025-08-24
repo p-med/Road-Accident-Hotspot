@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Friday, August 22, 2025 7:13:36 PM</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 127, in &lt;module&gt;
+﻿    if np.isnan(row[0]): # If the row has a fatality
+﻿       ^^^^^^^^^^^^^^^^
+﻿TypeError: ufunc 'isnan' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
+</msg><msg code="0" type="0">Failed script Road Crash Hotspot...</msg><msg code="-2147467259" type="100">Failed to execute (RoadCrashHotspot).</msg><msg code="0" type="3">Failed at Friday, August 22, 2025 7:14:01 PM (Elapsed Time: 25.13 seconds)</msg></messages>

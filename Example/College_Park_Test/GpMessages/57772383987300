@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Friday, August 22, 2025 11:25:40 PM</msg><msg code="0" type="0">Crash Point data snapped to the road feature class.</msg><msg code="0" type="0">Crash and fatalities data points joined to the road data.</msg><msg code="0" type="0">Average crash indicents per road segement per year calculated</msg><msg code="0" type="0">Crash incidents Hotspot calculated.</msg><msg code="0" type="0">Average fatal indicents per road segement per year calculated</msg><msg code="0" type="0">Fatal incidents Hotspot calculated.</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 279, in &lt;module&gt;
+﻿    total_fatalities = fatalities_df['Fatalities'].sum()
+﻿                       ^^^^^^^^^^^^^
+﻿NameError: name 'fatalities_df' is not defined. Did you mean: 'fatalities'?
+</msg><msg code="0" type="0">Failed script Crash Hotspot Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Friday, August 22, 2025 11:25:51 PM (Elapsed Time: 11.48 seconds)</msg></messages>

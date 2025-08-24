@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Friday, August 22, 2025 11:25:00 PM</msg><msg code="0" type="0">Crash Point data snapped to the road feature class.</msg><msg code="0" type="0">Crash and fatalities data points joined to the road data.</msg><msg code="0" type="0">Average crash indicents per road segement per year calculated</msg><msg code="0" type="0">Crash incidents Hotspot calculated.</msg><msg code="0" type="0">Average fatal indicents per road segement per year calculated</msg><msg code="0" type="0">Fatal incidents Hotspot calculated.</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 275, in &lt;module&gt;
+﻿    with open(html_template_path, 'r', encoding='utf-8') as file:
+﻿         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+﻿FileNotFoundError: [Errno 2] No such file or directory: '.\\Report\\report_template.html'
+</msg><msg code="0" type="0">Failed script Crash Hotspot Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Friday, August 22, 2025 11:25:15 PM (Elapsed Time: 15.79 seconds)</msg></messages>

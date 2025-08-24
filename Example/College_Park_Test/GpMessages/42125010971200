@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Friday, August 22, 2025 7:04:52 PM</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 166, in &lt;module&gt;
+﻿    avg_crash = row[0]/(time_span*row[1]) # Calculate the average number of crashes per year
+﻿                ~~~~~~^^~~~~~~~~~~~~~~~~~
+﻿TypeError: unsupported operand type(s) for /: 'NoneType' and 'float'
+</msg><msg code="0" type="0">Failed script Road Crash Hotspot...</msg><msg code="-2147467259" type="100">Failed to execute (RoadCrashHotspot).</msg><msg code="0" type="3">Failed at Friday, August 22, 2025 7:05:29 PM (Elapsed Time: 36.29 seconds)</msg></messages>
