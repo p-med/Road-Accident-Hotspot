@@ -20,7 +20,7 @@ report_type_field = arcpy.GetParameterAsText(4) # REQUIRED IF FATALITIES CHECKED
 fatalities_variable_name = arcpy.GetParameterAsText(5) # REQUIRED IF FATALITIES CHECKED: Fatal incident name
 road_network = arcpy.GetParameterAsText(6) # REQUIRED: Polyline road data
 max_distance = arcpy.GetParameterAsText(7) # OPTIONAL: Distance in miles for snapping
-date_span = arcpy.GetParameterAsText(8) # REQUIRED: time span to average the crash data
+date_span = str(arcpy.GetParameterAsText(8)).lower() # REQUIRED: time span to average the crash data
 report_path = arcpy.GetParameterAsText(9) # REQUIRED: Get the report path
 #arcpy.env.outputCoordinateSystem = arcpy.GetParameterAsText(9) # REQUIRED: Spatial Reference for calculations
 
@@ -33,12 +33,14 @@ class invalidDateSpan(Exception): # Exception class to handle invalid date span
     pass
 
 try:
+    
     # Check extension
     if arcpy.CheckExtension("Spatial") == "Available":
         arcpy.CheckOutExtension("Spatial")
     else:
         # Raise a custom exception
         raise LicenseError
+    
     # Check invalid fields    
     field_names = []
     for field in arcpy.ListFields(crash_data): # Retrieve all the field names from crash data
@@ -47,11 +49,13 @@ try:
         # Raise the error
         raise invalidField  
     date_values = {"year": 365, "month": 30, "week": 7} # date value dictionary
+    
+    # Check date span input
     if date_span not in date_values.keys(): # If the date span is not on the dictionary keys
         # Raise the custom error    
         raise invalidDateSpan
         
-    # Set environment settings
+    # Set environment settings MAYBE MOVE DOWN
     
     arcpy.env.overwriteOutput = True
     arcpy.addOutputsToMap = True
@@ -60,32 +64,39 @@ try:
     active_map = aprx.activeMap
     
     
-    # Prepare the calculation variables
+    # Prepare the global variables
         
-    # Get the date span variable based on the date field
-    date_span = date_span.lower()
-    dates = [] # Store the single dates
-    crash_array = arcpy.da.FeatureClassToNumPyArray(crash_data, date_field)
-    
-    for i in crash_array: # For each field element in the array
-        dates.append(i[0]) # Append the date value to the dates list
-    
-    # Calcualte the time span based on the data date field
-    time_span = round(((max(dates) - min(dates))/date_values[date_span]).astype(float))
-    
     # Create a copy of the crash data point layer to snap to the road layer
     snapped_points = arcpy.management.CopyFeatures(crash_data, "crash_data_copy")
     
-    # Snap the crash data to the road network
-    if max_distance != "": # If max_distance was not shared, then set the max distance to 25 miles
-        distance = max_distance + " Miles" # Craete the distance variable
-    else:
-        max_distance = "0.25 Miles"
-    snap_environment_1 = [road_network, "EDGE", max_distance] # Create the snap environment variable
-    snap_environment_2 = [road_network, "VERTEX", max_distance] # Create the snap environment variable
-    arcpy.edit.Snap(snapped_points, [snap_environment_1,snap_environment_2]) # Snap the copied crash data to the road network
+    # Get the date span variable based on the date field
     
-    arcpy.AddMessage("Crash Point data snapped to the road feature class.") # Add message to update process
+    def getTimeSpan(d_span, d_field, c_data): # Input Parameters: date span, date field, crash point data
+        dates = [] # Store the single dates
+        crash_array = arcpy.da.FeatureClassToNumPyArray(c_data, d_field)
+    
+        for i in crash_array: # For each field element in the array
+            dates.append(i[0]) # Append the date value to the dates list
+    
+        # Calcualte the time span based on the data date field
+        time_span = round(((max(dates) - min(dates))/date_values[d_span]).astype(float))
+        
+        return time_span
+    
+    # Snap points function
+    
+    def snapPoints(m_dist, points):
+        # Snap the crash data to the road network
+        if m_dist != "": # If max_distance was not shared, then set the max distance to 25 miles
+            distance = m_dist + " Miles" # Craete the distance variable
+        else:
+            distance = "0.25 Miles"
+        snap_environment_1 = [road_network, "EDGE", distance] # Create the snap environment variable
+        snap_environment_2 = [road_network, "VERTEX", distance] # Create the snap environment variable
+        snapped_points = arcpy.edit.Snap(points, [snap_environment_1,snap_environment_2]) # Snap the copied crash data to the road network
+        arcpy.AddMessage("Crash Point data snapped to the road feature class.") # Add message to update process
+        return snapped_points
+        
     
     # Calculate the length of each road segment
     arcpy.management.CalculateGeometryAttributes(road_network, [["Length_mi", "LENGTH"]], "MILES_US")
