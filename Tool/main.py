@@ -20,8 +20,9 @@ report_type_field = arcpy.GetParameterAsText(4) # REQUIRED IF FATALITIES CHECKED
 fatalities_variable_name = arcpy.GetParameterAsText(5) # REQUIRED IF FATALITIES CHECKED: Fatal incident name
 road_network = arcpy.GetParameterAsText(6) # REQUIRED: Polyline road data
 max_distance = arcpy.GetParameterAsText(7) # OPTIONAL: Distance in miles for snapping
-date_span = str(arcpy.GetParameterAsText(8)).lower() # REQUIRED: time span to average the crash data
-report_path = arcpy.GetParameterAsText(9) # REQUIRED: Get the report path
+units = arcpy.GetParameterAsText(8) # OPTIONAL: Get units preferred by the user
+date_span = str(arcpy.GetParameterAsText(9)).lower() # REQUIRED: time span to average the crash data
+report_path = arcpy.GetParameterAsText(10) # REQUIRED: Get the report path
 #arcpy.env.outputCoordinateSystem = arcpy.GetParameterAsText(9) # REQUIRED: Spatial Reference for calculations
 
 
@@ -88,7 +89,7 @@ try:
     def snapPoints(m_dist, points):
         # Snap the crash data to the road network
         if m_dist != "": # If max_distance was not shared, then set the max distance to 25 miles
-            distance = m_dist + " Miles" # Craete the distance variable
+            distance = m_dist + " " + units # Create the distance variable
         else:
             distance = "0.25 Miles"
         snap_environment_1 = [road_network, "EDGE", distance] # Create the snap environment variable
