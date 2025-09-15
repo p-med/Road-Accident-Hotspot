@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Monday, September 15, 2025 3:25:26 PM</msg><msg code="0" type="0">Crash Point data snapped to the road feature class.</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 285, in &lt;module&gt;
+﻿    crash_hotspots = hotspot_analysis(joined_roads,
+﻿                                      ^^^^^^^^^^^^
+﻿NameError: name 'joined_roads' is not defined
+</msg><msg code="0" type="0">Failed script Traffic Crash Hotspot Analysis Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Monday, September 15, 2025 3:25:33 PM (Elapsed Time: 6.33 seconds)</msg></messages>

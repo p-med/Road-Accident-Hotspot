@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Monday, September 15, 2025 3:05:20 PM</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 13, in &lt;module&gt;
+﻿    import generate_report
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\generate_report.py", line 4, in &lt;module&gt;
+﻿    crash_array = arcpy.da.FeatureClassToNumPyArray(crash_data, [date_field, "OBJECTID"])
+﻿                  ^^^^^
+﻿NameError: name 'arcpy' is not defined
+</msg><msg code="0" type="0">Failed script Traffic Crash Hotspot Analysis Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Monday, September 15, 2025 3:05:25 PM (Elapsed Time: 4.95 seconds)</msg></messages>

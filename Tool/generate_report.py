@@ -1,6 +1,11 @@
 # Create graphs and variable for report
 
-# Get an array for the crash data
+# Get arrays for crash data
+def get_dfs(data_layer, fields):
+    array_data = arcpy.da.FeatureClassToDataTable(data_layer, fields)
+    df_data = pd.DataFrame(array_data)
+    return df_data
+
 crash_array = arcpy.da.FeatureClassToNumPyArray(crash_data, [date_field, "OBJECTID"])
 hotspot_array = arcpy.da.FeatureClassToNumPyArray(crash_hotspots, ["Gi_Bin", "GiZScore", "GiPValue"])
 road_stats_array = arcpy.da.FeatureClassToNumPyArray(joined_crash_roads,
@@ -10,6 +15,21 @@ road_stats_array = arcpy.da.FeatureClassToNumPyArray(joined_crash_roads,
 crash_df = pd.DataFrame(crash_array)
 hotspot_df = pd.DataFrame(hotspot_array)
 road_stats_df = pd.DataFrame(road_stats_array)
+
+def get_incident_plot(df,date_field):
+    df["day"] = df.[date_field].dt.day_name()
+    df["year"] = df.[date_field].dt.year()
+    days_ordered = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    df['day'] = pd.Categorical(df['day'], categories=days_ordered, ordered=True)
+    daily_incident = df.groupby('day')['Fatalities'].mean()  # Get the mean fatalities per day of the week
+    yearly_incident = df.groupby('year')['Fatalities'].mean()  # Get the mean fatalities per day of the week
+
+    # Plot the figure (Daily Fatalities)
+    plt.figure()  # Creates a new, blank figure
+    daily_fat.plot(kind='line', figsize=(8, 6), title='Fatalities by Day', color='green', linewidth=3)
+    plt.ylabel("Mean fatalities")
+    plt.xlabel("Day of the Week")  # Add a label to the x-axis
+    daily_fat_png = "fatalities_by_day.png"
 
 if fatalities == "true":  # If Fatalities are available
     fatalities_df = pd.DataFrame(fatalities_array)  # Create a dataframe from the structured array
