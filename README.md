@@ -18,7 +18,7 @@ By facilitating the process through a tool, the user will only need to gather th
 
 ---
 
-### 🛠️ Requirements
+### Requirements
 
 * **Software:** ArcGIS Pro
 * **ArcGIS Extension:** You'll need the **Spatial Analyst extension** to run the Hot Spot Analysis tool.
