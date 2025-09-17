@@ -9,8 +9,6 @@ if __name__ == "__main__":
     # Import relevant modules
     import arcpy
     import pandas as pd
-    import hotspot_analysis
-#    import generate_report
     import matplotlib.pyplot as plt
 
     # Get inputs from the user
@@ -224,6 +222,134 @@ if __name__ == "__main__":
         arcpy.AddMessage("%s Hotspot calculated." % incident_type)
         return incident_hotspots
 
+    #### REPORT FUNCTIONS
+    # Get dataframes from layers to create the HTML report
+    def get_dfs(data_layer, fields):
+        array_data = arcpy.da.FeatureClassToNumPyArray(data_layer, fields)
+        df_data = pd.DataFrame(array_data)
+        return df_data
+
+    def get_totals(data_layer):
+        total_incidents = int(arcpy.management.GetCount(crash_data)[0])
+        return total_incidents
+
+
+    def get_mean_incidents(df, incident_field, date_field):
+        # Create a copy to avoid modifying the original DataFrame
+        df_copy = df.copy()
+
+        # Convert to datetime if it's not already
+        df_copy[date_field] = pd.to_datetime(df_copy[date_field])
+
+        df_copy["day"] = df_copy[date_field].dt.day_name()
+        df_copy['year'] = df_copy[date_field].dt.year
+        days_ordered = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        df_copy['day'] = pd.Categorical(df_copy['day'], categories=days_ordered, ordered=True)
+
+        if incident_field not in df_copy.columns or incident_field == "":
+            daily_incident = df_copy.groupby('day').size()  # Use size() instead of count()
+            yearly_incident = df_copy.groupby('year').size()  # Use size() instead of count()
+            return daily_incident, yearly_incident
+        else:
+            daily_incident = df_copy.groupby('day')[incident_field].mean()
+            yearly_incident = df_copy.groupby('year')[incident_field].mean()
+            return daily_incident, yearly_incident
+
+
+    def get_incident_plot(incident_mean, time_step, plot_type, report_path):
+        """
+        :param incident_mean: Mean value to plot
+        :param time_step: Time step to be used
+        :param plot_type: Either "Fatalities" or "Crashes"
+        :return: Void
+        """
+        # Plot the figure (Mean Incidents)
+        plot_title = plot_type + " by " + time_step
+        plt.figure()  # Creates a new, blank figure
+        incident_mean.plot(kind='line', figsize=(8, 6), title=plot_title, color='green', linewidth=3)
+        y_label = "Mean " + plot_type.lower()
+        plt.ylabel(y_label)
+        plt.xlabel("Time step")  # Add a label to the x-axis
+        incident_png = plot_type + "_" + time_step + ".png"
+        plot_path = report_path + "\\" + incident_png
+        # Save the plot
+        plt.savefig(plot_path, dpi=300, bbox_inches='tight')
+        plt.close()
+
+        # Return image name
+        return incident_png
+
+
+    def get_descriptive_variables(roads_df, total_roads):
+        segments_with_crashes = len(roads_df[roads_df['Join_Count'] > 0])  # Get the segments with crashes
+        crash_involvement_rate = (
+                                             segments_with_crashes / total_roads) * 100  # Get the percentage of segments with crashes
+        return segments_with_crashes, crash_involvement_rate
+
+
+    def generate_html_report(fatalities, crash_df, roads_df, hotspot_df, fatalities_df, crash_data_layer,
+                             road_data_layer, total_crashes, total_roads, date_span, date_field, report_output):
+
+        # Get descriptive variables
+        segments_with_crashes, crash_involvement_rate = get_descriptive_variables(roads_df, total_roads)
+
+        ## Create plots
+        # Get mean crashes values
+        if fatalities:
+            total_fatalities = fatalities_df['Fatalities'].sum()
+            daily_fatalities, yearly_fatalities = get_mean_incidents(fatalities_df, incident_field="Fatalities",
+                                                                     date_field=date_field)
+            daily_fat_plot = get_incident_plot(daily_fatalities, time_step="Daily", plot_type="Fatalities", report_path=report_output)
+            yearly_fat_plot = get_incident_plot(yearly_fatalities, time_step="Yearly", plot_type="Fatalities", report_path=report_output)
+        else:
+            daily_fat_plot = ""
+            yearly_fat_plot = ""
+            total_fatalities = "Not analyzed"
+
+        daily_crashes, yearly_crashes = get_mean_incidents(crash_df, incident_field="", date_field=date_field)
+
+        # Prepare plots
+        daily_crash_plot = get_incident_plot(daily_crashes, time_step="Daily", plot_type="Crashes",report_path=report_output)
+        yearly_crash_plot = get_incident_plot(yearly_crashes, time_step="Yearly", plot_type="Crashes",report_path=report_output)
+
+        # Get mean fatalities values
+
+        # Get number of hot and cold spots
+        hot_spots = len(hotspot_df[hotspot_df['Gi_Bin'] > 0])
+        cold_spots = len(hotspot_df[hotspot_df['Gi_Bin'] < 0])
+
+        # Open HTML template file
+        html_template_path = r".\report_template.html"
+        with open(html_template_path, 'r', encoding='utf-8') as file:
+            html_content = file.read()
+
+        # Create substitution dictionary
+        substitutions = {
+            '{crash_data_name}': crash_data_layer,
+            '{road_data_name}': road_data_layer,
+            '{crash_length}': str(total_crashes),
+            '{fatalities}': str(total_fatalities),
+            '{hotspots}': str(hot_spots),
+            '{coldspots}': str(cold_spots),
+            '{segments_with_crashes}': str(segments_with_crashes),
+            '{crash_involvement_rate}': "%.2f %%" % crash_involvement_rate,
+            '{analysis_period}': date_span.title(),
+            '{fatalities_by_day}': daily_fat_plot,
+            '{fatalities_by_year}': yearly_fat_plot,
+            '{crash_by_day}': daily_crash_plot,
+            '{crash_by_year}': yearly_crash_plot,
+        }
+
+        # Replace placeholders with actual values
+        for placeholder, value in substitutions.items():
+            html_content = html_content.replace(placeholder, str(value))
+
+        # Write the updated HTML file
+        output_html_path = report_output + r"\Crash_Analysis_Report.html"
+        with open(output_html_path, 'w', encoding='utf-8') as file:
+            file.write(html_content)
+        arcpy.AddMessage("HTML report generation completed successfully.")
+
     # Exception handling
 
     class InvalidField(Exception):  # Exception class to identify invalid field
@@ -263,33 +389,60 @@ if __name__ == "__main__":
         arcpy.env.overwriteOutput = True
         arcpy.addOutputsToMap = True
 
-        # Apply functions
+        # Apply functions to get hotspot analysis
         time_span = get_time_span(date_span, date_field, crash_data) # Get time span
         snapped_points = snap_points(max_distance, crash_data, road_network, units) # Snap points to roads
         road_length = get_road_length(road_network, units) # Get the road length
+
         if fatalities:
             ## Join the crash data to the road network
-            joined_roads = prep_roads(road_network, snapped_points, fat_field=True, report_type_field = fatalities)
-            get_avg_crash(joined_roads, time_span, date_field, road_length) # Calculate average crashes per road segment
-            get_avg_fat(joined_roads, time_span, date_field, fatalities) # Calculate average fatalities per road segment
+            joined_roads = prep_roads(road_network, snapped_points, fat_field=True, report_type_field=report_type_field, fatalities_variable_name=fatalities_variable_name)
+            get_avg_crash(joined_roads, time_span, date_field,
+                          road_length)  # Calculate average crashes per road segment
+            get_avg_fat(joined_roads, time_span, date_field,
+                        road_length)  # Calculate average fatalities per road segment
             fatalities_hotspots = hotspot_analysis(joined_roads,
-                                                               snapped_points,
-                                                               incident_type = "Fatalities",
-                                                               incident_field = "Avg_fata_yr",
-                                                               output = fatalities_output)
+                                                   snapped_points,
+                                                   incident_type="Fatalities",
+                                                   incident_field="Avg_fata_yr",
+                                                   output=fatalities_output)
             crash_hotspots = hotspot_analysis(joined_roads,
-                                                                    snapped_points,
-                                                                    incident_type="Crashes",
-                                                                    incident_field="Avg_crash_yr",
-                                                                    output=crash_output)
+                                              snapped_points,
+                                              incident_type="Crashes",
+                                              incident_field="Avg_crash_yr",
+                                              output=crash_output)
+            if report:
+                crash_df = get_dfs(crash_data, [date_field, "OBJECTID"])
+                fatalities_df = get_dfs(crash_data, [date_field, "Fatalities"])
+                hotspot_df = get_dfs(crash_hotspots, ["Gi_Bin", "GiZScore", "GiPValue"])
+                road_df = get_dfs(joined_roads,["Join_Count", "Length_mi", "Avg_crash_yr", "OBJECTID"])
+                total_roads = get_totals(joined_roads)
+                total_crashes = get_totals(crash_data)
+                generate_html_report(fatalities=True,crash_df=crash_df,roads_df=road_df,
+                                                     hotspot_df=hotspot_df,total_roads=total_roads,
+                                                     date_span=date_span,date_field=date_field,
+                                                     crash_data_layer=crash_data, road_data_layer=joined_roads,
+                                                     total_crashes=total_crashes,fatalities_df=fatalities_df,
+                                                     report_output=report_path)
         else:
             joined_roads = prep_roads(road_network, snapped_points, fat_field=False)
-            get_avg_crash(joined_roads, time_span, date_field, road_length) # Calculate average crashes per road segment
+            get_avg_crash(joined_roads, time_span, date_field,
+                          road_length)  # Calculate average crashes per road segment
             crash_hotspots = hotspot_analysis(joined_roads,
-                                                               snapped_points,
-                                                               incident_type="Crashes",
-                                                               incident_field="Avg_crash_yr",
-                                                               output=crash_output)
+                                              snapped_points,
+                                              incident_type="Crashes",
+                                              incident_field="Avg_crash_yr",
+                                              output=crash_output)
+            if report:
+                crash_df = get_dfs(crash_data, [date_field, "OBJECTID"])
+                hotspot_df = get_dfs(crash_hotspots, ["Gi_Bin", "GiZScore", "GiPValue"])
+                road_df = get_dfs(joined_roads,["Join_Count", "Length_mi", "Avg_crash_yr", "OBJECTID"])
+                total_roads = get_totals(joined_roads)
+                total_crashes = get_totals(crash_data)
+                generate_html_report(fatalities=False,roads_df=road_df,hotspot_df=hotspot_df,
+                                                     fatalities_df=None,crash_data_layer=crash_data,road_data_layer=road_network,
+                                                     total_crashes=total_crashes,total_roads=total_roads,date_span=date_span,
+                                                     date_field=date_field,crash_df=crash_df,report_output=report_path)
 
 
     except LicenseError:

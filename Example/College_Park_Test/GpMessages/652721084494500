@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Wednesday, September 17, 2025 1:51:02 PM</msg><msg code="0" type="0">Crash Point data snapped to the road feature class.</msg><msg code="0" type="0">Crash and fatalities data points joined to the road data.</msg><msg code="0" type="0">Average crash incidents per road segment per Crashdate calculated</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 402, in &lt;module&gt;
+﻿    get_avg_fat(joined_roads, time_span, date_field,
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 200, in get_avg_fat
+﻿    for row in cursor:  # For each row on the cursor
+﻿RuntimeError: Cannot find field 'true'
+</msg><msg code="0" type="0">Failed script Traffic Crash Hotspot Analysis Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Wednesday, September 17, 2025 1:51:07 PM (Elapsed Time: 4.60 seconds)</msg></messages>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Wednesday, September 17, 2025 1:47:55 PM</msg><msg code="0" type="0">Crash Point data snapped to the road feature class.</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 399, in &lt;module&gt;
+﻿    joined_roads = prep_roads(road_network, snapped_points, fat_field=True, report_type_field=fatalities)
+﻿                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 152, in prep_roads
+﻿    classify_incident(crash_points, report_type_field, fatalities_variable_name)
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 98, in classify_incident
+﻿    for row in cursor:  # For each row on the cursor
+﻿RuntimeError: Cannot find field 'true'
+</msg><msg code="0" type="0">Failed script Traffic Crash Hotspot Analysis Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Wednesday, September 17, 2025 1:47:58 PM (Elapsed Time: 3.22 seconds)</msg></messages>

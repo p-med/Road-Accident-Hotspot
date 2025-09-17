@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Wednesday, September 17, 2025 12:29:12 PM</msg><msg code="0" type="0">Crash Point data snapped to the road feature class.</msg><msg code="0" type="0">Crash data points joined to the road data.</msg><msg code="0" type="0">Average crash incidents per road segment per Crashdate calculated</msg><msg code="0" type="0">Crashes Hotspot calculated.</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 321, in &lt;module&gt;
+﻿    road_df = get_dfs(joined_roads,["Join_Count", "Length_mi", "Avg_crsh_yr", "OBJECTID"])
+﻿              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 228, in get_dfs
+﻿    array_data = arcpy.da.FeatureClassToNumPyArray(data_layer, fields)
+﻿                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+﻿RuntimeError: Cannot find field 'Avg_crsh_yr'
+</msg><msg code="0" type="0">Failed script Traffic Crash Hotspot Analysis Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Wednesday, September 17, 2025 12:29:34 PM (Elapsed Time: 21.76 seconds)</msg></messages>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Wednesday, September 17, 2025 1:26:55 PM</msg><msg code="0" type="0">Crash Point data snapped to the road feature class.</msg><msg code="0" type="0">Crash data points joined to the road data.</msg><msg code="0" type="0">Average crash incidents per road segment per Crashdate calculated</msg><msg code="0" type="0">Crashes Hotspot calculated.</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 442, in &lt;module&gt;
+﻿    generate_html_report(fatalities=False,roads_df=road_df,hotspot_df=hotspot_df,
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 312, in generate_html_report
+﻿    daily_crash_plot = get_incident_plot(daily_crashes, time_step="Daily", plot_type="Crashes")
+﻿                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+﻿TypeError: get_incident_plot() missing 1 required positional argument: 'report_path'
+</msg><msg code="0" type="0">Failed script Traffic Crash Hotspot Analysis Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Wednesday, September 17, 2025 1:27:03 PM (Elapsed Time: 7.57 seconds)</msg></messages>

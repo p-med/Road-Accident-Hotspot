@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Wednesday, September 17, 2025 1:08:09 PM</msg><msg code="0" type="0">Crash Point data snapped to the road feature class.</msg><msg code="0" type="0">Crash data points joined to the road data.</msg><msg code="0" type="0">Average crash incidents per road segment per Crashdate calculated</msg><msg code="0" type="0">Crashes Hotspot calculated.</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\main.py", line 324, in &lt;module&gt;
+﻿    generate_report.generate_html_report(fatalities=False,roads_df=road_df,hotspot_df=hotspot_df,
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\generate_report.py", line 67, in generate_html_report
+﻿    total_fatalities = fatalities_df['Fatalities'].sum()
+﻿                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+﻿  File "C:\Users\pmedi\Documents\00_final_project\Road-Accident-Hotspot\Tool\generate_report.py", line 11, in get_mean_incidents
+﻿    df_copy = df.copy()
+﻿                 ^^^^^^^
+﻿TypeError: 'Series' object is not callable
+</msg><msg code="0" type="0">Failed script Traffic Crash Hotspot Analysis Tool...</msg><msg code="-2147467259" type="100">Failed to execute (CrashHotspot).</msg><msg code="0" type="3">Failed at Wednesday, September 17, 2025 1:08:16 PM (Elapsed Time: 6.24 seconds)</msg></messages>
